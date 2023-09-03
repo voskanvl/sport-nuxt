@@ -158,3 +158,75 @@ declare interface StandingPage {
         table: StandingTableItem[]
     }[]
 }
+declare interface Match {
+    area: {
+        id: number
+        name: string
+        code: string
+        flag: href
+    }
+    competition: {
+        id: number
+        name: string
+        code: string
+        type: string
+        emblem: href
+    }
+    season: {
+        id: number
+        startDate: date
+        endDate: date
+        currentMatchday: 3
+        winner: null
+    }
+    id: number
+    utcDate: date
+    status: string
+    matchday: 1
+    stage: string
+    group: null
+    lastUpdated: date
+    homeTeam: Pick<Team, "id" | "name" | "shortName" | "tla" | "crest">
+    awayTeam: Pick<Team, "id" | "name" | "shortName" | "tla" | "crest">
+    score: {
+        winner: string
+        duration: string
+        fullTime: {
+            home: number
+            away: number
+        }
+        halfTime: {
+            away: number
+            home: number
+        }
+    }
+    odds: {
+        msg: string
+    }
+    referees: [
+        {
+            id: number
+            name: string
+            type: string
+            nationality: string
+        },
+    ]
+}
+declare interface Matches{
+    filters: {
+        competitions: string,
+        permission: string,
+        limit: number
+    },
+    resultSet: {
+        count: number,
+        competitions: string,
+        first: date,
+        last: date,
+        played: number,
+        wins: number,
+        draws: number,
+        losses: number
+    },
+    matches: Match[]
+}
