@@ -1,8 +1,6 @@
 export default defineEventHandler(async event => {
     const { apiSecret } = useRuntimeConfig()
     const team = event.context.params?.team
-    console.log("🚀 ~ team:", team)
-
 
     const uri = `https://api.football-data.org/v4/teams/${team}/matches`
 
@@ -13,7 +11,7 @@ export default defineEventHandler(async event => {
             },
         })
         if (!res) throw Error("error")
-        return { data: res }
+        return res
     } catch (error) {
         return { error }
     }

@@ -26,8 +26,6 @@ const {data} = await useFetch<Competitions>("/api/leagues/")
     place-items: center
     position: relative
 
-    & 
-
     &__header 
         grid-column: 1 / -1
         margin: 0

@@ -18,7 +18,6 @@ const setSort=(x: string)=>{
 
 const d = ref<StandingTableItem[]>(props.table)
 watch([props, sortProperty, sortDirection, search],()=>{
-    console.log(sortProperty, sortDirection);
     const getSortValue = () => {
         return sortDirection.value ? 1 : -1
     }

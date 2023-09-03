@@ -3,7 +3,8 @@ import Stadium from "~/assets/images/stadium.jpg"
 const route = useRoute()
 const id = route.params.id
 const query = route.query
-const {data} = await useFetch<{data:StandingPage}>(`/api/standings/${id}?${new URLSearchParams(query).toString()}`)
+const URLQuery = new URLSearchParams(query as Record<string, string>).toString()
+const {data} = await useFetch<StandingPage>(`/api/standings/${id}?${URLQuery}`)
 const currentTab = ref(0)
 
 const changeCurrentTab = (x: number) =>{
@@ -12,17 +13,18 @@ const changeCurrentTab = (x: number) =>{
 </script>
 
 <template lang='pug'>
-.standing-info 
-    img.standing-info__img(:src="data.data.competition.emblem", alt="emblem") 
-    h2.standing-info__title {{ data.data.competition.name }} 
-    h3.standing-info__code {{ data.data.competition.code }} 
+//- pre {{ data }}
+.standing-info(v-if="data && data.competition") 
+    img.standing-info__img(v-if="data.competition.emblem", :src="data.competition.emblem", alt="emblem")
+    h2.standing-info__title {{ data.competition.name }} 
+    h3.standing-info__code {{ data.competition.code }} 
     img.standing-info__back(:src="Stadium", alt="emblem")
     
 .tabs 
     .tabs__item(@click="changeCurrentTab(0)", :class="{active: currentTab===0}") TOTAL
     .tabs__item(@click="changeCurrentTab(1)", :class="{active: currentTab===1}") HOME
     .tabs__item(@click="changeCurrentTab(2)", :class="{active: currentTab===2}") AWAY
-Standing(:standing="data.data.standings[currentTab]")
+Standing(v-if="data && data.standings", :standing="data.standings[currentTab]")
 </template>
 
 <style lang='sass'>

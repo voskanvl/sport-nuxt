@@ -33,7 +33,7 @@ declare interface League {
     name: string
     code: string
     type: string
-    emblem: href | null
+    emblem: href 
     currentSeason: Season
     seasons: Season[]
 }

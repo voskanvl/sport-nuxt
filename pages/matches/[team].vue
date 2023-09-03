@@ -1,22 +1,18 @@
 <script setup lang='ts'>
+
 const route = useRoute()
 const team = route.params.team
 
-interface Props{
-    data:{
-        data: Matches
-    }
-}
 
-const {data:teamData} = useFetch<Props>(`/api/teams/${team}`)
-const {data} = useFetch<Props>(`/api/matches/${team}`)
+const {data:teamData} = useFetch<Team>(`/api/teams/${team}`)
+const {data} = useFetch<Matches>(`/api/matches/${team}`)
 
 </script>
 
 <template lang='pug'>
 .matches 
     .matches__info 
-        h2 {{ teamData.name }}
+        h2 {{ teamData?.name }}
 
     .matches__header 
         .match__area area
@@ -27,7 +23,7 @@ const {data} = useFetch<Props>(`/api/matches/${team}`)
         .matches__stage stage
         .matches__lastUpdated last updated
     ul.matches__list 
-        li.matches__item(v-for="i of data.data.matches")
+        li.matches__item(v-for="i of data?.matches")
             .match__area
                 .matches__area-name {{ i.area.name }}
                 .matches__area-code {{ i.area.code }}
@@ -46,7 +42,7 @@ const {data} = useFetch<Props>(`/api/matches/${team}`)
                 .matches__home-team.matches__team
                     .matches__home-team-title HOME
                     NuxtLink.matches__home-team-shortName(:href="`/teams/${i.homeTeam.id}`") {{ i.homeTeam.shortName }}
-                    img.matches__home-team-crest(:src="i.homeTeam.crest ") 
+                    img.matches__home-team-crest(:src="i.homeTeam.crest")
                     .matches__home-team-halfTime(v-if="i.status==='FINISHED'") 
                         span half time
                         span {{ i.score.halfTime.home }}
@@ -57,7 +53,7 @@ const {data} = useFetch<Props>(`/api/matches/${team}`)
                 .matches__away-team.matches__team
                     .matches__away-team-title AWAY
                     NuxtLink.matches__away-team-shortName(:href="`/teams/${i.awayTeam.id}`") {{ i.awayTeam.shortName }}
-                    img.matches__away-team-crest(:src="i.awayTeam.crest ") 
+                    img.matches__away-team-crest(:src="i.awayTeam.crest")
                     .matches__away-team-halfTime(v-if="i.status==='FINISHED'")  
                         span half time
                         span {{ i.score.halfTime.away }}
@@ -70,7 +66,6 @@ const {data} = useFetch<Props>(`/api/matches/${team}`)
             .matches__stage {{ i.stage }}
             .matches__lastUpdated {{ i.lastUpdated }}
             
-//- pre {{ data.data }}
 
 </template>
 
