@@ -1,4 +1,5 @@
 <script setup lang='ts'>
+import Stadium from "~/assets/images/stadium.jpg"
 const route = useRoute()
 const id = route.params.id
 const query = route.query
@@ -11,16 +12,17 @@ const changeCurrentTab = (x: number) =>{
 </script>
 
 <template lang='pug'>
-h1 {{id}} {{ query }}
-h2 {{ currentTab }}
+.standing-info 
+    img.standing-info__img(:src="data.data.competition.emblem", alt="emblem") 
+    h2.standing-info__title {{ data.data.competition.name }} 
+    h3.standing-info__code {{ data.data.competition.code }} 
+    img.standing-info__back(:src="Stadium", alt="emblem")
+    
 .tabs 
     .tabs__item(@click="changeCurrentTab(0)", :class="{active: currentTab===0}") TOTAL
     .tabs__item(@click="changeCurrentTab(1)", :class="{active: currentTab===1}") HOME
     .tabs__item(@click="changeCurrentTab(2)", :class="{active: currentTab===2}") AWAY
-//- div(v-if="data.standings")
 Standing(:standing="data.data.standings[currentTab]")
-//- div(v-else="data.standings")
-//- pre {{ data.data.standings }}
 </template>
 
 <style lang='sass'>
@@ -40,4 +42,19 @@ Standing(:standing="data.data.standings[currentTab]")
         &.active
             border: 2px solid #555
             border-bottom: none
+
+.standing-info 
+    display: flex
+    align-items: center
+    gap: 2rem
+    margin: 2rem
+
+    &__back
+        position: absolute
+        top: 1rem
+        right: 1rem
+        z-index: -1
+        width: 40vw
+        aspect-ratio: 1
+
 </style>

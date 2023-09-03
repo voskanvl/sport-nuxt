@@ -81,10 +81,13 @@ watch([props, sortProperty, sortDirection, search],()=>{
             border-color: #7777
             text-align: center
 
+        & > span 
+            font-family: "Open Sans", Arial, Helvetica, sans-serif
+            font-size: 25px
     &__list 
         padding-left: 0
         margin: 0
-        height: 50vh
+        height: 40vh
         overflow-y: auto
 
     &__item

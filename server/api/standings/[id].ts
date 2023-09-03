@@ -4,8 +4,6 @@ export default defineEventHandler(async event => {
     const query = getQuery(event)
     console.log("🚀 ~ query:", query)
 
-
-
     const uri = `https://api.football-data.org/v4/competitions/${id}/standings?${new URLSearchParams(query).toString()}`
 
     try {
