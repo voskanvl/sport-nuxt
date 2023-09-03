@@ -1,21 +1,22 @@
 <script setup lang='ts'>
-import Ball from "~/assets/images/ball.jpg"
+import Team from "~/assets/images/team.jpg"
 
-const {data} = await useFetch<Competitions>("/api/leagues/")
+const { data } = await useFetch<Teams>("/api/teams/")
 </script>
 
 <template lang='pug'>
 .grid
-    h2.grid__header LEAGUES
+    h2.grid__header TEAMS
     div.grid__left
-        img(:src="Ball", alt="ball")
-    ul.competitions(v-if="data")
-        li.competitions__item(v-for="i in data.competitions" :key="i.id") 
-            NuxtLink.competitions__link(:href="'/leagues/'+i.id")
-                div.competitions__id {{ i.id }}
-                div.competitions__area {{ i.area.name }}
-                div.competitions__name {{ i.name }}
-                div.competitions__code {{ i.code }}
+        img(:src="Team", alt="ball")
+    ul.teams(v-if="data")
+        li.teams__item(v-for="i in data.teams" :key="i.id") 
+            NuxtLink.teams__link(:href="'/teams/'+i.id")
+                div.teams__id {{ i.id }}
+                div.teams__name {{ i.name }}
+                div.teams__short-name {{ i.shortName }}
+                div.teams__tla {{ i.tla }}
+                img.teams__crest(:src="i.crest", alt="crest")
 </template>
 
 <style scoped lang='sass'>
@@ -25,8 +26,6 @@ const {data} = await useFetch<Competitions>("/api/leagues/")
     grid-template-columns: 2fr 3fr
     place-items: center
     position: relative
-
-    & 
 
     &__header 
         grid-column: 1 / -1
@@ -50,14 +49,14 @@ const {data} = await useFetch<Competitions>("/api/leagues/")
             height: 100%
             object-fit: contain
 
-
-
-.competitions
+.teams
     place-self: start
     width: 100%
     list-style: none
     box-shadow: -15px 15px 8px #7775
     padding-left: 0
+    height: 100%
+    overflow-y: auto
 
     &__item
         padding: 0.5rem
@@ -72,7 +71,16 @@ const {data} = await useFetch<Competitions>("/api/leagues/")
             color: #338
     &__link 
         display: grid
-        grid-template-columns: 1fr 1fr 3fr 1fr
+        grid-template-columns: 40px 2fr 1fr 1fr 80px
         place-items: center start
+
+    &__name, &__short-name 
+        font-weight: bold
+
+    &__crest 
+        width: 60px
+        height: 60px
+
+
         
 </style>

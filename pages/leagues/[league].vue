@@ -1,43 +1,6 @@
 <script setup lang="ts">
-type image = string
-type href = string
-type year = number
-type date = string
-interface Winner {
-    id: number,
-    name: string,
-    shortName: string,
-    tla: string,
-    crest: image,
-    address: string,
-    website: href,
-    founded: year,
-    clubColors: string,
-    venue: string,
-    lastUpdated: Date
-}
-interface Season {
-    id: number,
-    startDate: string,
-    endDate: string,
-    currentMatchday: number,
-    winner: Winner | null
-}
-interface League {
-    area: {
-        id: number,
-        name: string,
-        code: string,
-        flag: href | null
-    },
-    id: number,
-    name: string,
-    code: string,
-    type: string,
-    emblem: href | null,
-    currentSeason: Season,
-    seasons: Season[]
-}
+
+
 const { league } = useRoute().params
 const { data } = useFetch<League>(`/api/leagues/${league}`)
 </script>
@@ -83,9 +46,10 @@ const { data } = useFetch<League>(`/api/leagues/${league}`)
     
             
     .league-seasons
-        h2.league-seasons__head Seasons
+        h2.league-seasons__head Seasons. 
         .league-seasons__sticky.league-seasons__header
                 .league-seasons__id id
+                .league-seasons__standings standing
                 .league-seasons__start-date start date
                 .league-seasons__end-date end date
                 .league-seasons__current-matchday current matchday
@@ -93,6 +57,7 @@ const { data } = useFetch<League>(`/api/leagues/${league}`)
         ul.league-seasons__list
             li.league-seasons__season(v-for="season of data.seasons", :key="season.id")
                 .league-seasons__id {{ season.id }}
+                NuxtLink(:href="`/standings/${league}?season=${new Date(season.startDate).getFullYear()}`") standings
                 .league-seasons__start-date {{ season.startDate }}
                 .league-seasons__end-date {{ season.endDate }}
                 .league-seasons__current-matchday {{ season.currentMatchday }}
@@ -192,7 +157,7 @@ const { data } = useFetch<League>(`/api/leagues/${league}`)
 
     &__season
         display: grid
-        grid-template-columns: repeat(5, 1fr)
+        grid-template-columns: repeat(6, 1fr)
         
         &:nth-child(odd)
             background: #eee7
