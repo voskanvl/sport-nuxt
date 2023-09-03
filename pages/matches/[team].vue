@@ -18,6 +18,14 @@ const {data} = useFetch<Props>(`/api/matches/${team}`)
     .matches__info 
         h2 {{ teamData.name }}
 
+    .matches__header 
+        .match__area area
+        .matches__competition competition 
+        .matches__season season
+        .matches__teams teams
+        .matches__status status
+        .matches__stage stage
+        .matches__lastUpdated last updated
     ul.matches__list 
         li.matches__item(v-for="i of data.data.matches")
             .match__area
@@ -69,29 +77,56 @@ const {data} = useFetch<Props>(`/api/matches/${team}`)
 <style lang='sass'>
 .matches 
 
+    &__info 
+        margin-left: 1rem
+
     &__list
         display: flex
         flex-direction: column 
         row-gap: 1rem
         padding-left: 0
+        margin: 0
+        height: 75vh
+        overflow-y: auto
 
-    &__item 
+
+    &__item, &__header 
         padding: 1rem
         display: grid
-        grid-template-columns: 1fr 1fr 1fr 3fr 1fr 1fr 1fr
+        grid-template-columns: 1fr 1fr 1fr 30vw 1fr 1fr 1fr
         place-items: center
 
         &:nth-child(odd)
             background: #ddd
+
+            .matches__teams
+                background: #777
+                color: #fff
+                & a 
+                    color: #fff
+
+                .matches__home-score, .matches__away-score
+                    border-color: #fff
+                
+
+        &:nth-child(even)
+            .matches__teams
+                background: #fff
+
+                
+
     &__area-flag, &__competition-emblem, &__home-team-crest, &__away-team-crest
         width: 60px
         height: 40px
         object-fit: contain
 
     &__teams
-        flex: 0 0 30%
+        place-self: stretch
         display: grid
         grid-template-columns: repeat(2,1fr)
+        padding: 1rem
+        border-radius: 8px
+        box-shadow: 0 5px 8px #7777
 
 
     &__team 
@@ -129,5 +164,15 @@ const {data} = useFetch<Props>(`/api/matches/${team}`)
         border: 1px solid #777
         place-self: stretch
         text-align: center
+
+    & .matches__header
+        background: #555
+        color: #fff
+
+        .matches__teams 
+            place-self: center
+            background: #555
+            color: #fff
+            box-shadow: none
     
 </style>
