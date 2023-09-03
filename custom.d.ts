@@ -177,12 +177,12 @@ declare interface Match {
         startDate: date
         endDate: date
         currentMatchday: 3
-        winner: null
+        winner: Winner | null
     }
     id: number
     utcDate: date
-    status: string
-    matchday: 1
+    status: "FINISHED" | "TIMED" | "SCHEDULED"
+    matchday: number
     stage: string
     group: null
     lastUpdated: date

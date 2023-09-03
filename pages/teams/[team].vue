@@ -4,7 +4,7 @@ const { data } = await useFetch<Team>(`/api/teams/${team}`)
 </script>
 
 <template lang='pug'>
-.team
+.team(v-if="data")
     img.team__crest(v-if="data.crest", :src="data.crest")
     .team__info
         h2.team__name {{ data.name }}
@@ -13,7 +13,7 @@ const { data } = await useFetch<Team>(`/api/teams/${team}`)
                 span(v-if="typeof val !== 'object'") {{ snakeToWords(key) }}
                 span(v-if="typeof val !== 'object'") {{ val}}
         .team__coach.coach(v-if="data.coach")
-            input#check-coach(type="radio", name="radio", hidden) 
+            input#check-coach(type="radio", name="radio", hidden)
             h3.coach__caption 
                 label(for="check-coach") COACH
             .coach__list
@@ -22,7 +22,7 @@ const { data } = await useFetch<Team>(`/api/teams/${team}`)
                         span(v-if="typeof val !== 'object'") {{ snakeToWords(key) }}
                         span(v-if="typeof val !== 'object'") {{ val}}
         .team__squad.squad(v-if="data.squad")
-            input#check-squad(type="radio", name="radio",hidden) 
+            input#check-squad(type="radio", name="radio",hidden)
             h3.squad__caption 
                 label(for="check-squad") SQUAD
             .squad__list 
@@ -31,6 +31,7 @@ const { data } = await useFetch<Team>(`/api/teams/${team}`)
                         li.squad__item(v-for="[key,val] of Object.entries(player)")
                             span(v-if="typeof val !== 'object'") {{ snakeToWords(key) }}
                             span(v-if="typeof val !== 'object'") {{ val}}
+        NuxtLink(:href="`/matches/${team}`") Matches
             
 </template>
 
