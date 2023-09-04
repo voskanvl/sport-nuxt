@@ -1,8 +1,7 @@
 <template lang='pug'>
 menu.menu
     nav.menu__nav
-        NuxtLink(href="/") Main
-        NuxtLink(href="/leagues") Leagues
+        NuxtLink(href="/") Leagues
         NuxtLink(href="/teams") Teams
 </template>
 

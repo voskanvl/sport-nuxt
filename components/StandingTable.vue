@@ -98,12 +98,14 @@ watch([props, sortProperty, sortDirection, search],()=>{
 
         &:nth-child(odd)
             background: #ddd
+        &:nth-child(even)
+            background: #fff
 
         & > a 
             text-align: left
             cursor: pointer
 
-    &__header 
+    &__header.table__item 
         text-transform: uppercase
         background: #555
         color: #fff

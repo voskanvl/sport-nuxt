@@ -5,12 +5,13 @@ const team = route.params.team
 
 
 const {data:teamData} = useFetch<Team>(`/api/teams/${team}`)
-const {data} = useFetch<Matches>(`/api/matches/${team}`)
+const {data,pending} = useFetch<Matches>(`/api/matches/${team}`)
 
 </script>
 
 <template lang='pug'>
-.matches 
+h2(v-if="pending") Loading ...
+.matches(v-if="data &&  data.matches") 
     .matches__info 
         h2 {{ teamData?.name }}
 
@@ -23,7 +24,7 @@ const {data} = useFetch<Matches>(`/api/matches/${team}`)
         .matches__stage stage
         .matches__lastUpdated last updated
     ul.matches__list 
-        li.matches__item(v-for="i of data?.matches")
+        li.matches__item(v-for="i of data.matches")
             .match__area
                 .matches__area-name {{ i.area.name }}
                 .matches__area-code {{ i.area.code }}
@@ -66,7 +67,7 @@ const {data} = useFetch<Matches>(`/api/matches/${team}`)
             .matches__stage {{ i.stage }}
             .matches__lastUpdated {{ i.lastUpdated }}
             
-
+h2.matches-error(v-if="!pending && !data") 403 Forbidden 
 </template>
 
 <style lang='sass'>
@@ -169,5 +170,7 @@ const {data} = useFetch<Matches>(`/api/matches/${team}`)
             background: #555
             color: #fff
             box-shadow: none
-    
+.matches-error
+    display: grid
+    place-items: center
 </style>

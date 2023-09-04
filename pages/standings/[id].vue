@@ -4,7 +4,7 @@ const route = useRoute()
 const id = route.params.id
 const query = route.query
 const URLQuery = new URLSearchParams(query as Record<string, string>).toString()
-const {data} = await useFetch<StandingPage>(`/api/standings/${id}?${URLQuery}`)
+const {data,pending,error} = await useFetch<StandingPage>(`/api/standings/${id}?${URLQuery}`)
 const currentTab = ref(0)
 
 const changeCurrentTab = (x: number) =>{
@@ -14,17 +14,22 @@ const changeCurrentTab = (x: number) =>{
 
 <template lang='pug'>
 //- pre {{ data }}
+h2(v-if="pending") Loading...
+//- pre(v-if="data && !error") {{data}}
 .standing-info(v-if="data && data.competition") 
-    img.standing-info__img(v-if="data.competition.emblem", :src="data.competition.emblem", alt="emblem")
-    h2.standing-info__title {{ data.competition.name }} 
-    h3.standing-info__code {{ data.competition.code }} 
-    img.standing-info__back(:src="Stadium", alt="emblem")
+    .standing-info__details
+        img.standing-info__img(v-if="data.competition.emblem", :src="data.competition.emblem", alt="emblem")
+        h2.standing-info__title {{ data.competition.name }} 
+        h3.standing-info__code {{ data.competition.code }} 
+        img.standing-info__back(:src="Stadium", alt="emblem")
     
-.tabs 
-    .tabs__item(@click="changeCurrentTab(0)", :class="{active: currentTab===0}") TOTAL
-    .tabs__item(@click="changeCurrentTab(1)", :class="{active: currentTab===1}") HOME
-    .tabs__item(@click="changeCurrentTab(2)", :class="{active: currentTab===2}") AWAY
-Standing(v-if="data && data.standings", :standing="data.standings[currentTab]")
+    .tabs 
+        .tabs__item(@click="changeCurrentTab(0)", :class="{active: currentTab===0}") TOTAL
+        .tabs__item(@click="changeCurrentTab(1)", :class="{active: currentTab===1}") HOME
+        .tabs__item(@click="changeCurrentTab(2)", :class="{active: currentTab===2}") AWAY
+    Standing.standing-info__table(v-if="data && data.standings", :standing="data.standings[currentTab]")
+h2.matches-error(v-if="!pending && !data") 403 Forbidden 
+pre.matches-error(v-if="error") {{ error }} 
 </template>
 
 <style lang='sass'>
@@ -46,10 +51,14 @@ Standing(v-if="data && data.standings", :standing="data.standings[currentTab]")
             border-bottom: none
 
 .standing-info 
-    display: flex
-    align-items: center
+    
     gap: 2rem
     margin: 2rem
+
+    &__details 
+        display: flex
+        align-items: center
+        gap: 1rem
 
     &__back
         position: absolute
@@ -58,5 +67,11 @@ Standing(v-if="data && data.standings", :standing="data.standings[currentTab]")
         z-index: -1
         width: 40vw
         aspect-ratio: 1
+    
+    &__img
+        width: 18%
+
+    &__table 
+        margin-inline: -2rem
 
 </style>

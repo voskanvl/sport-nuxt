@@ -64,6 +64,8 @@ const { data } = useFetch<League>(`/api/leagues/${league}`)
                 .league-seasons__winner(v-if="season.winner")
                     NuxtLink(:href="'/teams/'+season.winner.id") {{ season.winner.name || "" }}
                 .league-seasons__winner(v-else="season.winner")
+
+h2.league-error(v-else="data") 403 Forbidden 
 </template>
 
 <style lang="sass">
@@ -184,5 +186,9 @@ const { data } = useFetch<League>(`/api/leagues/${league}`)
 
 .league-current-season
     @extend .league-area
+
+.league-error 
+    display: grid
+    place-items: center
 
 </style>

@@ -230,3 +230,46 @@ declare interface Matches{
     },
     matches: Match[]
 }
+declare interface Person {
+    id: number
+    name: string
+    firstName: string
+    lastName: string
+    dateOfBirth: date
+    nationality: string
+    section: string
+    position: string
+    shirtNumber: number
+    lastUpdated: date
+    currentTeam: {
+        area: {
+            id: number
+            name: string
+            code: string
+            flag: href
+        }
+        id: number
+        name: string
+        shortName: string
+        tla: string
+        crest: href
+        address: string
+        website: href
+        founded: number
+        clubColors: string
+        venue: string
+        runningCompetitions: [
+            {
+                id: number
+                name: string
+                code: string
+                type: string
+                emblem: href | null
+            },
+        ]
+        contract: {
+            start: date
+            until: null
+        }
+    }
+}
