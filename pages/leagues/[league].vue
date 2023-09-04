@@ -2,10 +2,11 @@
 
 
 const { league } = useRoute().params
-const { data } = useFetch<League>(`/api/leagues/${league}`)
+const { data, pending } = useFetch<League>(`/api/leagues/${league}`)
 </script>
 
 <template lang="pug">
+h2(v-if="pending") Loading ...
 .league(v-if="data") 
     img.league__flag(v-if="data.area.flag", :src="data.area.flag", alt="flag")
     .league-area 
@@ -65,7 +66,7 @@ const { data } = useFetch<League>(`/api/leagues/${league}`)
                     NuxtLink(:href="'/teams/'+season.winner.id") {{ season.winner.name || "" }}
                 .league-seasons__winner(v-else="season.winner")
 
-h2.league-error(v-else="data") 403 Forbidden 
+h2.league-error(v-if="!data && !pending") 403 Forbidden 
 </template>
 
 <style lang="sass">

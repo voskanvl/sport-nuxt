@@ -11,7 +11,6 @@ export default defineEventHandler(async event => {
                 "X-Auth-Token": apiSecret,
             },
         })
-        console.log(res);
         if(!res) throw Error("error")
         return res
     } catch (error) {

@@ -21,11 +21,11 @@ div(v-if="pending") Loading ...
                     h3 COACH
                     NuxtLink.coach__link(:href="`/persons/${data.coach.id}`") {{ data.coach.name }}
 
-            .team__squad.squad(v-if="data.squad.sort((a,b)=>a.name > b.name ? 1 : -1)")
+            .team__squad.squad(v-if="data.squad")
                 h3.squad__caption 
                     label(for="check-squad") SQUAD
                 ul.squad__list 
-                    li(v-for="player of data.squad")
+                    li(v-for="player of data.squad.sort((a,b)=>a.name > b.name ? 1 : -1)")
                         NuxtLink(:href="`/persons/${player.id}`") {{ player.name }}
                                 
             h2.team__matches
@@ -48,6 +48,7 @@ h2.team-error(v-if="!data && !pending") 403 Forbidden
         right: 1%
         top: 1%
         z-index: -1
+        width: 10vw
 
 
     [class$="__item"]

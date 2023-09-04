@@ -5,7 +5,7 @@ const team = route.params.team
 
 
 const {data:teamData} = useFetch<Team>(`/api/teams/${team}`)
-const {data,pending} = useFetch<Matches>(`/api/matches/${team}`)
+const {data,pending, error} = useFetch<Matches>(`/api/matches/${team}`)
 
 </script>
 
@@ -68,6 +68,7 @@ h2(v-if="pending") Loading ...
             .matches__lastUpdated {{ i.lastUpdated }}
             
 h2.matches-error(v-if="!pending && !data") 403 Forbidden 
+h2.matches-error(v-if="error") 404 not found 
 </template>
 
 <style lang='sass'>

@@ -34,6 +34,7 @@ pre.matches-error(v-if="error") {{ error }}
 
 <style lang='sass'>
 .tabs
+    margin-top: 3rem
     display: flex
     padding-left: 1rem
     gap: 2px
