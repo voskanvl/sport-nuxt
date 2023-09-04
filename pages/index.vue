@@ -56,7 +56,7 @@ const {data} = await useFetch<Competitions>("/api/leagues/")
     list-style: none
     box-shadow: -15px 15px 8px #7775
     padding-left: 0
-    height: 70vh
+    height: 50vh
     overflow-y: auto
     border-radius: 8px 0 0 8px
 
