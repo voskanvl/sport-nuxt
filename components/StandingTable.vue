@@ -7,21 +7,21 @@ const sortProperty = ref<string>("position")
 const sortDirection = ref<boolean>(true)
 const search = ref("")
 
-const setSort=(x: string)=>{
-    if (sortProperty.value===x){
-        sortDirection.value=!sortDirection.value
+const setSort = (x: string) => {
+    if (sortProperty.value === x) {
+        sortDirection.value = !sortDirection.value
     } else {
-        sortProperty.value=x
-        sortDirection.value=true
+        sortProperty.value = x
+        sortDirection.value = true
     }
 }
 
-const d = ref<StandingTableItem[]>(props.table)
-watch([props, sortProperty, sortDirection, search],()=>{
+const d = ref<StandingTableItem[]>([...props.table])
+watch([props, sortProperty, sortDirection, search], () => {
     const getSortValue = () => {
         return sortDirection.value ? 1 : -1
     }
-    d.value = props.table
+    d.value = d.value
         .sort((a, b) => a[sortProperty.value] > b[sortProperty.value] ? getSortValue() : -1 * getSortValue())
         .filter(e => e.team.name.includes(search.value))
 })
