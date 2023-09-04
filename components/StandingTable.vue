@@ -21,7 +21,7 @@ watch([props, sortProperty, sortDirection, search], () => {
     const getSortValue = () => {
         return sortDirection.value ? 1 : -1
     }
-    d.value = d.value
+    d.value = [...props.table]
         .sort((a, b) => a[sortProperty.value] > b[sortProperty.value] ? getSortValue() : -1 * getSortValue())
         .filter(e => e.team.name.includes(search.value))
 })
