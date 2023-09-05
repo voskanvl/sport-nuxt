@@ -13,7 +13,7 @@ const changeCurrentTab = (x: number) =>{
 </script>
 
 <template lang='pug'>
-h2(v-if="error") {{ error}}
+h2(v-if="error") {{ error.message}}
 h2(v-else-if="pending") Loading
 h2(v-else-if="!data || status !== 'success'") The request limit has been exceeded. Try again in a minute
 .standing-info(v-else) 
@@ -29,7 +29,6 @@ h2(v-else-if="!data || status !== 'success'") The request limit has been exceede
         .tabs__item(@click="changeCurrentTab(2)", :class="{active: currentTab===2}") AWAY
     Standing.standing-info__table(v-if="data && data.standings", :standing="data.standings[currentTab]")
 h2.matches-error(v-if="!pending && !data") 403 Forbidden 
-pre.matches-error(v-if="error") {{ error }} 
 </template>
 
 <style lang='sass'>

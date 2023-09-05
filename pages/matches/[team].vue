@@ -10,7 +10,7 @@ const {data,pending, error, status} = useFetch<Matches>(`/api/matches/${team}`)
 </script>
 
 <template lang='pug'>
-h2(v-if="error") {{ error }}
+h2(v-if="error") {{ error.message }}
 h2(v-else-if="pending") Loading
 h2(v-else-if="!data || status !== 'success'") The request limit has been exceeded. Try again in a minute
 .matches(v-else) 
