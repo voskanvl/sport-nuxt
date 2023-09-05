@@ -1,11 +1,13 @@
 <script setup lang='ts'>
 const { team } = useRoute().params
-const { data,pending } = await useFetch<Team>(`/api/teams/${team}`)
+const { data,pending,error,status } = await useFetch<Team>(`/api/teams/${team}`)
 </script>
 
 <template lang='pug'>
-div(v-if="pending") Loading ...
-.team(v-if="data")
+h2(v-if="error") {{ error }}
+h2(v-else-if="pending") Loading
+h2(v-else-if="!data || status !== 'success'") The request limit has been exceeded. Try again in a minute
+.team(v-else)
     img.team__crest(v-if="data.crest", :src="data.crest")
     .team__info
         h2.team__name {{ data.name }}
@@ -31,7 +33,6 @@ div(v-if="pending") Loading ...
             h2.team__matches
                 NuxtLink(:href="`/matches/${team}`") Matches
 
-h2.team-error(v-if="!data && !pending") 403 Forbidden 
 </template>
 
 <style lang='sass'>

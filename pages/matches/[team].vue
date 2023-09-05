@@ -5,13 +5,15 @@ const team = route.params.team
 
 
 const {data:teamData} = useFetch<Team>(`/api/teams/${team}`)
-const {data,pending, error} = useFetch<Matches>(`/api/matches/${team}`)
+const {data,pending, error, status} = useFetch<Matches>(`/api/matches/${team}`)
 
 </script>
 
 <template lang='pug'>
-h2(v-if="pending") Loading ...
-.matches(v-if="data &&  data.matches") 
+h2(v-if="error") {{ error }}
+h2(v-else-if="pending") Loading
+h2(v-else-if="!data || status !== 'success'") The request limit has been exceeded. Try again in a minute
+.matches(v-else) 
     .matches__info 
         h2 {{ teamData?.name }}
 

@@ -4,7 +4,7 @@ const route = useRoute()
 const id = route.params.id
 const query = route.query
 const URLQuery = new URLSearchParams(query as Record<string, string>).toString()
-const {data,pending,error} = await useFetch<StandingPage>(`/api/standings/${id}?${URLQuery}`)
+const {data,pending,error,status} = await useFetch<StandingPage>(`/api/standings/${id}?${URLQuery}`)
 const currentTab = ref(0)
 
 const changeCurrentTab = (x: number) =>{
@@ -13,10 +13,10 @@ const changeCurrentTab = (x: number) =>{
 </script>
 
 <template lang='pug'>
-//- pre {{ data }}
-h2(v-if="pending") Loading...
-//- pre(v-if="data && !error") {{data}}
-.standing-info(v-if="data && data.competition") 
+h2(v-if="error") {{ error}}
+h2(v-else-if="pending") Loading
+h2(v-else-if="!data || status !== 'success'") The request limit has been exceeded. Try again in a minute
+.standing-info(v-else) 
     .standing-info__details
         img.standing-info__img(v-if="data.competition.emblem", :src="data.competition.emblem", alt="emblem")
         h2.standing-info__title {{ data.competition.name }} 

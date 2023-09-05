@@ -2,12 +2,14 @@
 
 
 const { league } = useRoute().params
-const { data, pending } = useFetch<League>(`/api/leagues/${league}`)
+const { data, pending, status, error } = useFetch<League>(`/api/leagues/${league}`)
 </script>
 
 <template lang="pug">
-h2(v-if="pending") Loading ...
-.league(v-if="data") 
+h2(v-if="error") {{ error }}
+h2(v-else-if="pending") Loading
+h2(v-else-if="!data || status !== 'success'") The request limit has been exceeded. Try again in a minute
+.league(v-else) 
     img.league__flag(v-if="data.area.flag", :src="data.area.flag", alt="flag")
     .league-area 
         .league-area__name 

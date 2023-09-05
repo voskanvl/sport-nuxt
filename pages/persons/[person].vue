@@ -1,10 +1,13 @@
 <script setup lang='ts'>
 const {person} = useRoute().params
-const {data} = useFetch<Person>(`/api/persons/${person}`)
+const {data, error, status, pending} = useFetch<Person>(`/api/persons/${person}`)
 </script>
 
 <template lang='pug'>
-.person(v-if="data") 
+h2(v-if="error") {{ error }}
+h2(v-else-if="pending") Loading
+h2(v-else-if="!data || status !== 'success'") The request limit has been exceeded. Try again in a minute
+.person(v-else) 
     h2.person__name {{ data.name }}
     .person__info
         .person__detail 
