@@ -69,8 +69,6 @@ h2(v-else-if="!data || status !== 'success'") The request limit has been exceede
             .matches__stage {{ i.stage }}
             .matches__lastUpdated {{ i.lastUpdated }}
             
-h2.matches-error(v-if="!pending && !data") 403 Forbidden 
-h2.matches-error(v-if="error") 404 not found 
 </template>
 
 <style lang='sass'>
