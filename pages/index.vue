@@ -29,6 +29,9 @@ h2.message(v-else-if="!data || status !== 'success'") The request limit has been
     place-items: center
     position: relative
 
+    @media (width <= 1024px)
+        grid-template-columns: 1rem calc(100% - 2rem)
+
     &__header 
         grid-column: 1 / -1
         margin: 0
@@ -51,6 +54,9 @@ h2.message(v-else-if="!data || status !== 'success'") The request limit has been
             height: 100%
             object-fit: contain
 
+        @media (width <= 1024px)
+            width: 0
+            visibility: hidden
 
 
 .competitions

@@ -78,6 +78,7 @@ h2.league-error(v-if="!data && !pending") 403 Forbidden
     grid-template-rows: repeat(2, calc(50vh - 1rem - 27px))
     place-items: center
     padding: 1rem
+    position: relative
     &__flag
         position: absolute
         z-index: -1
@@ -87,6 +88,12 @@ h2.league-error(v-if="!data && !pending") 403 Forbidden
         filter: opacity(0.3) blur(1px)
         object-fit: cover
         object-position: center
+
+    @media (width <= 768px)
+        grid-template-columns: 100%
+        grid-template-rows: unset
+        grid-auto-rows: auto
+        row-gap: 1rem
 
 .league-area
 
@@ -163,6 +170,9 @@ h2.league-error(v-if="!data && !pending") 403 Forbidden
     &__season
         display: grid
         grid-template-columns: repeat(6, 1fr)
+
+        @media (width <= 768px)
+            font-size: clamp(11px, 16 / 768 * 100vw, 1rem)
         
         &:nth-child(odd)
             background: #eee7
