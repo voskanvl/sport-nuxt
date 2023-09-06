@@ -6,9 +6,9 @@ const { data, pending, status, error } = useFetch<League>(`/api/leagues/${league
 </script>
 
 <template lang="pug">
-h2(v-if="error") {{ error.message }}
-h2(v-else-if="pending") Loading
-h2(v-else-if="!data || status !== 'success'") The request limit has been exceeded. Try again in a minute
+h2.message(v-if="error") {{ error.message }}
+h2.message(v-else-if="pending") Loading
+h2.message(v-else-if="!data || status !== 'success'") The request limit has been exceeded. Try again in a minute
 .league(v-else) 
     img.league__flag(v-if="data.area.flag", :src="data.area.flag", alt="flag")
     .league-area 
@@ -46,17 +46,17 @@ h2(v-else-if="!data || status !== 'success'") The request limit has been exceede
             span {{ data.currentSeason.currentMatchday }}
         NuxtLink.league-current-season__winner(v-if="data.currentSeason.winner", :href="'/teams/'+data.currentSeason.winner.id") {{ data.currentSeason.winner.name }}
 
-    
-            
+
+
     .league-seasons
         h2.league-seasons__head Seasons. 
         .league-seasons__sticky.league-seasons__header
-                .league-seasons__id id
-                .league-seasons__standings standing
-                .league-seasons__start-date start date
-                .league-seasons__end-date end date
-                .league-seasons__current-matchday current matchday
-                .league-seasons__winner winner
+            .league-seasons__id id
+            .league-seasons__standings standing
+            .league-seasons__start-date start date
+            .league-seasons__end-date end date
+            .league-seasons__current-matchday current matchday
+            .league-seasons__winner winner
         ul.league-seasons__list
             li.league-seasons__season(v-for="season of data.seasons", :key="season.id")
                 .league-seasons__id {{ season.id }}

@@ -4,15 +4,15 @@ const route = useRoute()
 const team = route.params.team
 
 
-const {data:teamData} = useFetch<Team>(`/api/teams/${team}`)
-const {data,pending, error, status} = useFetch<Matches>(`/api/matches/${team}`)
+const { data: teamData } = useFetch<Team>(`/api/teams/${team}`)
+const { data, pending, error, status } = useFetch<Matches>(`/api/matches/${team}`)
 
 </script>
 
 <template lang='pug'>
-h2(v-if="error") {{ error.message }}
-h2(v-else-if="pending") Loading
-h2(v-else-if="!data || status !== 'success'") The request limit has been exceeded. Try again in a minute
+h2.message(v-if="error") {{ error.message }}
+h2.message(v-else-if="pending") Loading
+h2.message(v-else-if="!data || status !== 'success'") The request limit has been exceeded. Try again in a minute
 .matches(v-else) 
     .matches__info 
         h2 {{ teamData?.name }}
@@ -39,7 +39,7 @@ h2(v-else-if="!data || status !== 'success'") The request limit has been exceede
                 .matches__season-startDate {{ i.season.startDate }}
                 .matches__season-endDate {{ i.season.endDate }}
                 NuxtLink.matches__season-winner(v-if="i.season.winner" :href="`/teams/${i.season.winner.id}`") {{ i.season.winner.name }}
-            
+
 
             .matches__teams
                 .matches__home-team.matches__team

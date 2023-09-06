@@ -4,9 +4,9 @@ const {data, error, status, pending} = useFetch<Person>(`/api/persons/${person}`
 </script>
 
 <template lang='pug'>
-h2(v-if="error") {{ error.message }}
-h2(v-else-if="pending") Loading
-h2(v-else-if="!data || status !== 'success'") The request limit has been exceeded. Try again in a minute
+h2.message(v-if="error") {{ error.message }}
+h2.message(v-else-if="pending") Loading
+h2.message(v-else-if="!data || status !== 'success'") The request limit has been exceeded. Try again in a minute
 .person(v-else) 
     h2.person__name {{ data.name }}
     .person__info

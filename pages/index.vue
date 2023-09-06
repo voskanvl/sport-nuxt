@@ -1,12 +1,12 @@
 <script setup lang='ts'>
 import Ball from "~/assets/images/ball.jpg"
-const {data,pending,error,status} = await useFetch<Competitions>("/api/leagues/")
+const { data, pending, error, status } = await useFetch<Competitions>("/api/leagues/")
 </script>
 
 <template lang='pug'>
-h2(v-if="error") {{ error.message }}
-h2(v-else-if="pending") Loading
-h2(v-else-if="!data || status !== 'success'") The request limit has been exceeded. Try again in a minute
+h2.message(v-if="error") {{ error.message }}
+h2.message(v-else-if="pending") Loading
+h2.message(v-else-if="!data || status !== 'success'") The request limit has been exceeded. Try again in a minute
 
 .grid(v-else)
     h2.grid__header LEAGUES

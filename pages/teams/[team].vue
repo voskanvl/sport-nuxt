@@ -1,12 +1,13 @@
 <script setup lang='ts'>
+import snakeToWords from '~/utils/snakeToWords'
 const { team } = useRoute().params
-const { data,pending,error,status } = await useFetch<Team>(`/api/teams/${team}`)
+const { data, pending, error, status } = await useFetch<Team>(`/api/teams/${team}`)
 </script>
 
 <template lang='pug'>
-h2(v-if="error") {{ error.message }}
-h2(v-else-if="pending") Loading
-h2(v-else-if="!data || status !== 'success'") The request limit has been exceeded. Try again in a minute
+h2.message(v-if="error") {{ error.message }}
+h2.message(v-else-if="pending") Loading
+h2.message(v-else-if="!data || status !== 'success'") The request limit has been exceeded. Try again in a minute
 .team(v-else)
     img.team__crest(v-if="data.crest", :src="data.crest")
     .team__info
@@ -20,8 +21,8 @@ h2(v-else-if="!data || status !== 'success'") The request limit has been exceede
                 a(:href="data.website") {{ data.website }}
         .team__staff
             .team__coach.coach(v-if="data.coach")
-                    h3 COACH
-                    NuxtLink.coach__link(:href="`/persons/${data.coach.id}`") {{ data.coach.name }}
+                h3 COACH
+                NuxtLink.coach__link(:href="`/persons/${data.coach.id}`") {{ data.coach.name }}
 
             .team__squad.squad(v-if="data.squad")
                 h3.squad__caption 
@@ -29,9 +30,9 @@ h2(v-else-if="!data || status !== 'success'") The request limit has been exceede
                 ul.squad__list 
                     li(v-for="player of data.squad.sort((a,b)=>a.name > b.name ? 1 : -1)")
                         NuxtLink(:href="`/persons/${player.id}`") {{ player.name }}
-                                
-            h2.team__matches
-                NuxtLink(:href="`/matches/${team}`") Matches
+
+    h2.team__matches
+        NuxtLink(:href="`/matches/${team}`", title="show all matches") MATCHES
 
 </template>
 
@@ -68,6 +69,16 @@ h2(v-else-if="!data || status !== 'success'") The request limit has been exceede
         display: grid
         grid-template-columns: 1fr 1fr
         gap: 2rem
+
+    &__matches  
+        width: max-content
+        margin: 2rem auto
+        
+        & > a
+            border-radius: 10px
+            background: #33f
+            padding: .5rem 2rem
+            color: #fff
 
 
 
